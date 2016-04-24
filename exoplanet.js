@@ -1,6 +1,6 @@
 //Width and height
-			var w = 1000;
-			var h = 500;
+			var w = 1200;
+			var h = 700;
 
 			// var low_temp = -1000000000;
 			// var high_temp = 1000000000;
@@ -9,10 +9,21 @@
 			var planets_json = "http://www.asterank.com/api/kepler?query={}&limit=0";
 
 			//Create SVG element
-			var svg = d3.select("body")
+			// var svg = d3.select("body")
+			// 			.append("svg")
+			// 			.attr("width", w)
+			// 			.attr("height", h)
+			// 			.attr("class","content");
+
+			var svg = d3.select("div#container")
 						.append("svg")
-						.attr("width", w)
-						.attr("height", h);
+						.attr("preserveAspectRatio", "xMinYMin meet")
+						.attr("viewBox", "0 0 " + w + " " + h)
+						.classed("svg-content", true);
+
+			var div = d3.select("body").append("div")	
+					    .attr("class", "tooltip")				
+					    .style("opacity", 0);
 
 
 
@@ -65,24 +76,47 @@
 		   		.on("mouseover", function(d) {
 
 					//Update the tooltip position and value
-					d3.select("#tooltip")
-						.style("left", xScale(+d.DEC)+10 + "px")
-						.style("top", yScale(+d.RA)+10 + "px")						
-						.select("#value")
+					// d3.select("#tooltip")
+					// 	.style("left", xScale(+d.DEC)+10 + "px")
+					// 	.style("top", yScale(+d.RA)+10 + "px")						
+					// 	.select("#value")
+					// 	.text("ID: " + d.KOI);
+
+					// d3.select("#tooltip")
+					// 	.select("#temperature")
+					// 	.text("Temperature: " + formatAsNumber(d.TPLANET));
+
+					div
+						// .transition()		
+						// .duration(200)		
+						.style("opacity", 1);	
+
+					div.text("Kepler Object Details")
+						// .style("font-weight", "bold")
+						.style("left", (d3.event.pageX) + "px")		
+						.style("top", (d3.event.pageY - 28) + "px");
+
+					div.append("p")
 						.text("ID: " + d.KOI);
 
-					d3.select("#tooltip")
-						.select("#temperature")
-						.text("Temperature: " + formatAsNumber(d.TPLANET));
+					div.append("p")
+						.text("Temperature: " + formatAsNumber(d.TPLANET));	
+
+
 			   
-					//Show the tooltip
-					d3.select("#tooltip").classed("hidden", false);
+					// //Show the tooltip
+					// d3.select("#tooltip").classed("hidden", false);
 
 			   })
 			   .on("mouseout", function() {
 			   
 					//Hide the tooltip
-					d3.select("#tooltip").classed("hidden", true);
+					// d3.select("#tooltip").classed("hidden", true);
+
+					div
+						// .transition()		
+		    //             .duration(500)		
+		                .style("opacity", 0);
 					
 			   })
 

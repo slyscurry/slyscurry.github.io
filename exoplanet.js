@@ -170,7 +170,7 @@
 
 			   		//Update…
 					circles.transition()
-							.duration(1000)
+							.duration(100)
 							.style("opacity", 1)
 							.style("pointer-events", "all");
 

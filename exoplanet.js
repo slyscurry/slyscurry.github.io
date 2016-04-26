@@ -6,7 +6,7 @@
 			// var high_temp = 1000000000;
 
 
-			var planets_json = "http://www.asterank.com/api/kepler?query={}&limit=0";
+			var planets_json = "http://www.asterank.com/api/kepler?query={}&limit=100";
 
 			//Create SVG element
 			// var svg = d3.select("body")
@@ -156,7 +156,7 @@
 
 			function showAllData() {
 
-				d3.json("http://www.asterank.com/api/kepler?query={}&limit=0", function(error, dataset) {
+				d3.json("http://www.asterank.com/api/kepler?query={}&limit=100", function(error, dataset) {
 				if (error) return console.warn(error);
 		
 

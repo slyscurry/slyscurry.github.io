@@ -5,13 +5,13 @@
     padding-bottom: 100%;
     vertical-align: top;
     overflow: hidden;
-    transform: translateZ(0);
 }
 .svg-content {
     display: inline-block;
     position: absolute;
     top: 0;
     left: 0;
+    transform: translateZ(0);
 }
 div.tooltip {
     position: absolute;

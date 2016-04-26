@@ -8,6 +8,10 @@
 
 			var planets_json = "http://www.asterank.com/api/kepler?query={}&limit=0";
 
+			var planets_csv = "http://exoplanetarchive.ipac.caltech.edu/cgi-bin/nstedAPI/nph-nstedAPI?table=cumulative&where=koi_disposition%20like%20%27CONFIRMED%27%20&format=csv";
+
+			var habitable_planets = "http://exoplanetarchive.ipac.caltech.edu/cgi-bin/nstedAPI/nph-nstedAPI?table=cumulative&where=koi_disposition%20like%20%27CONFIRMED%27%20and%20koi_teq%20between%20180%20and%20310%20&format=csv";
+
 			//Create SVG element
 			// var svg = d3.select("body")
 			// 			.append("svg")
@@ -28,7 +32,7 @@
 
 
 
-			d3.json(planets_json, function(error, dataset) {
+			d3.csv(planets_csv, function(error, dataset) {
 			if (error) return console.warn(error);
 
 			var xScale = d3.scale.linear()
@@ -41,12 +45,12 @@
 
 
 			var colorScale = d3.scale.quantize()
-							.domain([d3.min(dataset, function(d) { return +d.TPLANET; }), d3.max(dataset, function(d) { return +d.TPLANET; })])
+							.domain([d3.min(dataset, function(d) { return +d.koi_teq; }), d3.max(dataset, function(d) { return +d.koi_teq; })])
 							.range(["#3399CC", "#669999", "#CCCCCC","#CC9999","#CC6666"])
 							;
 
 			var rScale = d3.scale.linear()
-								 .domain([0, d3.max(dataset, function(d) { return +d.RPLANET; })])
+								 .domain([0, d3.max(dataset, function(d) { return +d.koi_prad; })])
 								 .range([2, 20]);
 
 
@@ -68,10 +72,10 @@
 			   		return yScale(+d.RA);
 			   })
 			   .attr("r", function(d) {
-			   		return rScale(+d.RPLANET);
+			   		return rScale(+d.koi_prad);
 			   })
 		   		.attr("fill", function(d) {
-				return colorScale(d.TPLANET);
+				return colorScale(d.koi_teq);
 		   		})
 		   		.on("mouseover", function(d) {
 
@@ -100,7 +104,7 @@
 						.text("ID: " + d.KOI);
 
 					div.append("p")
-						.text("Temperature: " + formatAsNumber(d.TPLANET));	
+						.text("Temperature: " + formatAsNumber(d.koi_teq));	
 
 
 			   
@@ -131,7 +135,7 @@
 			 function updateData() {
 			 	d3.select("#tooltip").classed("hidden", true);
 
-				d3.json("http://www.asterank.com/api/kepler?query={%22TPLANET%22:{%22$lt%22:374,%22$gt%22:182}}&limit=0", function(error, dataset) {
+				d3.csv(habitable_planets, function(error, dataset) {
 					if (error) return console.warn(error);
 
 
@@ -156,7 +160,7 @@
 
 			function showAllData() {
 
-				d3.json("http://www.asterank.com/api/kepler?query={}&limit=0", function(error, dataset) {
+				d3.csv(planets_csv, function(error, dataset) {
 				if (error) return console.warn(error);
 		
 

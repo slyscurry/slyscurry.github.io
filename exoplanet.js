@@ -141,7 +141,7 @@
 					//Exit…
 					circles.exit()
 						.transition()
-						.duration(1000)
+						.duration(100)
 						.style("opacity", 0)
 						.style("pointer-events", "none");
 						// .remove();

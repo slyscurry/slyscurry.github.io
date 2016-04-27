@@ -8,10 +8,9 @@
 
 			var planets_json = "http://www.asterank.com/api/kepler?query={}&limit=0";
 
-			var planets_csv = "http://exoplanetarchive.ipac.caltech.edu/cgi-bin/nstedAPI/nph-nstedAPI?table=cumulative&where=koi_disposition%20like%20%27CONFIRMED%27%20&format=csv";
-
-			var habitable_planets = "http://exoplanetarchive.ipac.caltech.edu/cgi-bin/nstedAPI/nph-nstedAPI?table=cumulative&where=koi_disposition%20like%20%27CONFIRMED%27%20and%20koi_teq%20between%20180%20and%20310%20&format=csv";
-
+			var planets_csv = "http://exoplanetarchive.ipac.caltech.edu/cgi-bin/nstedAPI/nph-nstedAPI?table=cumulative&select=koi_fwm_sdec,koi_fwm_sra,koi_teq,koi_prad&where=koi_disposition%20like%20%27CONFIRMED%27%20&format=csv";
+			
+			var habitable_planets = "http://exoplanetarchive.ipac.caltech.edu/cgi-bin/nstedAPI/nph-nstedAPI?table=cumulative&select=koi_fwm_sdec,koi_fwm_sra,koi_teq,koi_prad&where=koi_disposition%20like%20%27CONFIRMED%27%20and%20koi_teq%20between%20180%20and%20310%20&format=csv";
 			//Create SVG element
 			// var svg = d3.select("body")
 			// 			.append("svg")
@@ -34,13 +33,15 @@
 
 			d3.csv(planets_csv, function(error, dataset) {
 			if (error) return console.warn(error);
+			console.log(dataset);
 
 			var xScale = d3.scale.linear()
-							.domain([d3.min(dataset, function(d) { return +d.DEC; }), d3.max(dataset, function(d) { return +d.DEC; })])
+							.domain([d3.min(dataset, function(d) { return +d.koi_fwm_sdec; }), d3.max(dataset, function(d) { return +d.koi_fwm_sdec; })])
 							.range([50, w-200]);
 
+
 			var yScale = d3.scale.linear()
-							.domain([d3.min(dataset, function(d) { return +d.RA; }), d3.max(dataset, function(d) { return +d.RA; })])
+							.domain([d3.min(dataset, function(d) { return +d.koi_fwm_sra; }), d3.max(dataset, function(d) { return +d.koi_fwm_sra; })])
 							.range([50, h-100]);
 
 
@@ -58,7 +59,7 @@
 
 		
 
-			console.log(d3.max(dataset, function(d) { return +d.DEC; }));
+			console.log(d3.max(dataset, function(d) { return +d.koi_fwm_sdec; }));
 
 
 			svg.selectAll("circle")
@@ -66,10 +67,10 @@
 			   .enter()
 			   .append("circle")
 			   .attr("cx", function(d) {
-			   		return xScale(+d.DEC);
+			   		return xScale(+d.koi_fwm_sdec);
 			   })
 			   .attr("cy", function(d) {
-			   		return yScale(+d.RA);
+			   		return yScale(+d.koi_fwm_sra);
 			   })
 			   .attr("r", function(d) {
 			   		return rScale(+d.koi_prad);
@@ -81,7 +82,7 @@
 
 					//Update the tooltip position and value
 					// d3.select("#tooltip")
-					// 	.style("left", xScale(+d.DEC)+10 + "px")
+					// 	.style("left", xScale(+d.koi_fwm_sdec)+10 + "px")
 					// 	.style("top", yScale(+d.RA)+10 + "px")						
 					// 	.select("#value")
 					// 	.text("ID: " + d.KOI);
@@ -164,7 +165,7 @@
 				if (error) return console.warn(error);
 		
 
-				console.log(d3.max(dataset, function(d) { return +d.DEC; }));
+				console.log(d3.max(dataset, function(d) { return +d.koi_fwm_sdec; }));
 
 
 				//Select…

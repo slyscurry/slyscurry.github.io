@@ -1,0 +1,43 @@
+http://exoplanetarchive.ipac.caltech.edu/cgi-bin/nstedAPI/nph-nstedAPI?table=exoplanets&select=pl_hostname,ra,dec,st_teff&format=csv
+
+st_teff
+
+
+http://exoplanetarchive.ipac.caltech.edu/cgi-bin/nstedAPI/nph-nstedAPI?table=exoplanets&select=distinct%20pl_hostname,ra,dec,st_teff&where=st_teff<182&format=csv
+
+pl_rade
+
+koi_disposition+like+%27C%25%27&constraint=koi_teq%20between%20180%20and%20310
+
+between 180 and 310
+
+
+http://exoplanetarchive.ipac.caltech.edu/cgi-bin/nstedAPI/nph-nstedAPI?table=cumulative&where=koi_disposition like 'C' and koi_teq between 180 and 310 &format=csv
+
+http://exoplanetarchive.ipac.caltech.edu/cgi-bin/nstedAPI/nph-nstedAPI?table=cumulative&where=koi_disposition%20not like%20%27FALSE_POSITIVE%27%20and%20koi_teq%20between%20180%20and%20310%20&format=csv
+
+
+Habitable - with candidates
+
+http://exoplanetarchive.ipac.caltech.edu/cgi-bin/nstedAPI/nph-nstedAPI?table=cumulative&where=koi_disposition%20not%20like%20%27FALSE_POSITIVE%27%20and%20koi_teq%20between%20180%20and%20310%20&format=csv
+
+Habitable - confirmed
+
+http://exoplanetarchive.ipac.caltech.edu/cgi-bin/nstedAPI/nph-nstedAPI?table=cumulative&where=koi_disposition%20like%20%27CONFIRMED%27%20and%20koi_teq%20between%20180%20and%20310%20&format=csv
+
+
+All- confirmed
+
+http://exoplanetarchive.ipac.caltech.edu/cgi-bin/nstedAPI/nph-nstedAPI?table=cumulative&where=koi_disposition%20like%20%27CONFIRMED%27%20&format=csv
+
+
+http://exoplanetarchive.ipac.caltech.edu/cgi-bin/nstedAPI/nph-nstedAPI?table=cumulative&select=koi_fwm_sdec,koi_fwm_sra,koi_teq,koi_prad&where=koi_disposition%20like%20%27CONFIRMED%27%20&format=json
+
+http://exoplanetarchive.ipac.caltech.edu/cgi-bin/nstedAPI/nph-nstedAPI?table=cumulative&select=koi_fwm_sdec,koi_fwm_sra,koi_teq,koi_prad&where=koi_disposition%20like%20%27CONFIRMED%27%20and%20koi_teq%20between%20180%20and%20310%20&format=json
+
+koi_fwm_sdec,koi_fwm_sra,koi_teq,koi_prad
+
+
+http://exoplanetarchive.ipac.caltech.edu/cgi-bin/nstedAPI/nph-nstedAPI?table=cumulative&select=kepler_name,koi_fwm_sdec,koi_fwm_sra,koi_teq,koi_prad,koi_disposition&where=koi_disposition%20like%20%27CONFIRMED%27%20&format=JSON
+
+http://exoplanetarchive.ipac.caltech.edu/cgi-bin/nstedAPI/nph-nstedAPI?table=exoplanets&select=pl_hostname,pl_letter,pl_rade,pl_kepflag,pl_eqt&where=pl_kepflag=1&format=JSON

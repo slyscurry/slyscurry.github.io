@@ -198,17 +198,22 @@ for (j = 0; j<cumulative.length;j++)
 			 function updateData() {
 			 	d3.select("#tooltip").classed("hidden", true);
 
-				d3.csv(habitable_planets, function(error, dataset) {
-					if (error) return console.warn(error);
+				// d3.csv(habitable_planets, function(error, dataset) {
+				// 	if (error) return console.warn(error);
 
 
 					var circles = svg.selectAll("circle")
-    				.data(dataset, function(d) { return d.KOI; });
+    				.data(dataset, function(d) { 
+    					if(d.koi_teq>=180 && d.koi_teq <=310)
+	    					{
+	    						return d.kepler_name;
+	    					}
+    					});
 
 					//Exit…
 					circles.exit()
 						.transition()
-						.duration(100)
+						.duration(500)
 						.style("opacity", 0)
 						.style("pointer-events", "none");
 						// .remove();
@@ -217,14 +222,14 @@ for (j = 0; j<cumulative.length;j++)
 
 
 
-  					});
+  					// });
   					};
 				
 
 			function showAllData() {
 
-				d3.csv(planets_csv, function(error, dataset) {
-				if (error) return console.warn(error);
+				// d3.csv(planets_csv, function(error, dataset) {
+				// if (error) return console.warn(error);
 		
 
 				console.log(d3.max(dataset, function(d) { return +d.koi_fwm_sdec; }));
@@ -232,18 +237,18 @@ for (j = 0; j<cumulative.length;j++)
 
 				//Select…
 				var circles = svg.selectAll("circle")
-	    				.data(dataset, function(d) { return d.KOI; });
+	    				.data(dataset, function(d) { return d.kepler_name; });
 
 
 			   		//Update…
 					circles.transition()
-							.duration(100)
+							.duration(500)
 							.style("opacity", 1)
 							.style("pointer-events", "all");
 
 
 
-  					});
+  					// });
   					};
 			 
 				

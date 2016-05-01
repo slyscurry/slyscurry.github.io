@@ -40,14 +40,22 @@ var mergedJSON = cumulative;// Copying Source2 to a new Object
 for (j = 0; j<cumulative.length;j++)
 {
    var cumulativeKeplerName = cumulative[j].kepler_name;
+   var cumulativeRade = cumulative[j].koi_prad;
+   var mergeItem = mergedJSON[j];
 
     for (i = 0; i<exoplanet.length;i++)
     {
-       if(exoplanet[i].kepler_name == cumulativeKeplerName)
+       if(exoplanet[i].pl_rade != null)
           {
-            var mergeItem = mergedJSON[j];
-            mergeItem.pl_rade = exoplanet[i].pl_rade;
-            break
+            if(exoplanet[i].kepler_name == cumulativeKeplerName)
+            {
+              mergeItem.rade = exoplanet[i].pl_rade;
+              break
+            }
+          }
+          else
+          {
+            mergeItem.rade = cumulativeRade;
           }
     }
 }

@@ -38,6 +38,6 @@ http://exoplanetarchive.ipac.caltech.edu/cgi-bin/nstedAPI/nph-nstedAPI?table=cum
 koi_fwm_sdec,koi_fwm_sra,koi_teq,koi_prad
 
 
-http://exoplanetarchive.ipac.caltech.edu/cgi-bin/nstedAPI/nph-nstedAPI?table=cumulative&select=kepler_name,koi_fwm_sdec,koi_fwm_sra,koi_teq,koi_prad,koi_disposition&where=koi_disposition%20like%20%27CONFIRMED%27%20&format=JSON
+http://exoplanetarchive.ipac.caltech.edu/cgi-bin/nstedAPI/nph-nstedAPI?table=cumulative&select=kepler_name,koi_fwm_sdec,koi_fwm_sra,koi_teq,koi_prad,koi_disposition&where=koi_disposition%20like%20%27CONFIRMED%27%20%20and%20koi_fwm_sdec%3E0%20and%20koi_teq%3E0&format=JSON
 
 http://exoplanetarchive.ipac.caltech.edu/cgi-bin/nstedAPI/nph-nstedAPI?table=exoplanets&select=pl_hostname,pl_letter,pl_rade,pl_kepflag,pl_eqt&where=pl_kepflag=1&format=JSON

@@ -1,3 +1,66 @@
+var cumulative = (function () {
+    var json = null;
+    $.ajax({
+        'async': false,
+        'global': false,
+        'url': "./cumulative.json",
+        'dataType': "json",
+        'success': function (data) {
+            json = data;
+        }
+    });
+    return json;
+})(); 
+
+var exoplanet = (function () {
+    var json = null;
+    $.ajax({
+        'async': false,
+        'global': false,
+        'url': "./exoplanet.json",
+        'dataType': "json",
+        'success': function (data) {
+          json = data;
+        }
+        
+    });
+    return json;
+})(); 
+
+
+
+for (i = 0; i<exoplanet.length;i++)
+{
+   var singleItem = exoplanet[i];
+   singleItem.kepler_name = exoplanet[i].pl_hostname + " " + exoplanet[i].pl_letter; // example
+}
+
+var dataset = cumulative;// Copying Source2 to a new Object
+
+for (j = 0; j<cumulative.length;j++)
+{
+   var cumulativeKeplerName = cumulative[j].kepler_name;
+   var cumulativeRade = cumulative[j].koi_prad;
+   var mergeItem = dataset[j];
+
+    for (i = 0; i<exoplanet.length;i++)
+    {
+       if(exoplanet[i].pl_rade != null)
+          {
+            if(exoplanet[i].kepler_name == cumulativeKeplerName)
+            {
+              mergeItem.rade = exoplanet[i].pl_rade;
+              break
+            }
+          }
+          else
+          {
+            mergeItem.rade = cumulativeRade;
+          }
+    }
+}
+
+// console.log(mergedJSON);
 //Width and height
 			var w = 1200;
 			var h = 700;
@@ -8,8 +71,8 @@
 
 			// var planets_json = "http://www.asterank.com/api/kepler?query={}&limit=0";
 
-			var planets_json = "http://exoplanetarchive.ipac.caltech.edu/cgi-bin/nstedAPI/nph-nstedAPI?table=cumulative&select=koi_fwm_sdec,koi_fwm_sra,koi_teq,koi_prad&where=koi_disposition%20like%20%27CONFIRMED%27%20&format=json";
-			var habitable_planets = "habitable.csv";
+			// var planets_json = "http://exoplanetarchive.ipac.caltech.edu/cgi-bin/nstedAPI/nph-nstedAPI?table=cumulative&select=koi_fwm_sdec,koi_fwm_sra,koi_teq,koi_prad&where=koi_disposition%20like%20%27CONFIRMED%27%20&format=json";
+			// var habitable_planets = "habitable.csv";
 			//Create SVG element
 			// var svg = d3.select("body")
 			// 			.append("svg")
@@ -30,8 +93,8 @@
 
 
 
-			d3.json(planets_json, function(error, dataset) {
-			if (error) return console.warn(error);
+			// (mergedJSON, function(error, dataset) {
+			// if (error) return console.warn(error);
 			console.log(dataset);
 
 			var xScale = d3.scale.linear()
@@ -50,7 +113,7 @@
 							;
 
 			var rScale = d3.scale.linear()
-								 .domain([0, d3.max(dataset, function(d) { return +d.koi_prad; })])
+								 .domain([0, d3.max(dataset, function(d) { return +d.rade; })])
 								 .range([2, 20]);
 
 
@@ -72,7 +135,7 @@
 			   		return yScale(+d.koi_fwm_sra);
 			   })
 			   .attr("r", function(d) {
-			   		return rScale(+d.koi_prad);
+			   		return rScale(+d.rade);
 			   })
 		   		.attr("fill", function(d) {
 				return colorScale(d.koi_teq);
@@ -101,7 +164,7 @@
 						.style("top", (d3.event.pageY - 28) + "px");
 
 					div.append("p")
-						.text("ID: " + d.KOI);
+						.text("ID: " + d.kepler_name);
 
 					div.append("p")
 						.text("Temperature: " + formatAsNumber(d.koi_teq));	
@@ -129,7 +192,7 @@
 
 
 			   
-		});
+		// });
 
 
 			 function updateData() {

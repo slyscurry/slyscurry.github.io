@@ -6,11 +6,10 @@
 			// var high_temp = 1000000000;
 
 
-			var planets_json = "http://www.asterank.com/api/kepler?query={}&limit=0";
+			// var planets_json = "http://www.asterank.com/api/kepler?query={}&limit=0";
 
-			var planets_csv = "http://exoplanetarchive.ipac.caltech.edu/cgi-bin/nstedAPI/nph-nstedAPI?table=cumulative&select=koi_fwm_sdec,koi_fwm_sra,koi_teq,koi_prad&where=koi_disposition%20like%20%27CONFIRMED%27%20&format=csv";
-			
-			var habitable_planets = "http://exoplanetarchive.ipac.caltech.edu/cgi-bin/nstedAPI/nph-nstedAPI?table=cumulative&select=koi_fwm_sdec,koi_fwm_sra,koi_teq,koi_prad&where=koi_disposition%20like%20%27CONFIRMED%27%20and%20koi_teq%20between%20180%20and%20310%20&format=csv";
+			var planets_json = "http://exoplanetarchive.ipac.caltech.edu/cgi-bin/nstedAPI/nph-nstedAPI?table=cumulative&select=koi_fwm_sdec,koi_fwm_sra,koi_teq,koi_prad&where=koi_disposition%20like%20%27CONFIRMED%27%20&format=json";
+			var habitable_planets = "habitable.csv";
 			//Create SVG element
 			// var svg = d3.select("body")
 			// 			.append("svg")
@@ -31,7 +30,7 @@
 
 
 
-			d3.csv(planets_csv, function(error, dataset) {
+			d3.json(planets_json, function(error, dataset) {
 			if (error) return console.warn(error);
 			console.log(dataset);
 

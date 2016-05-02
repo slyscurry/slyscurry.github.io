@@ -28,6 +28,12 @@
 						<button class="button button2"  onclick="showAllData()">
 				                Show All 
 						</button>
+						<g id="slider">
+						<input id="slide" type="range"
+						 min="3" max="15" step="1" value="15"
+						 onchange="updateSlider(this.value)" />
+						 
+						</g>
 					</div>
 					<div id="container" class="svg-container">
 						<!-- <div id="tooltip" class="hidden">

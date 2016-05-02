@@ -114,12 +114,11 @@ for (j = 0; j<cumulative.length;j++)
 
 			var rScale = d3.scale.linear()
 								 .domain([0, d3.max(dataset, function(d) { return +d.rade; })])
-								 .range([2, 20]);
+								 .range([3, 15]);
 
 
 			var formatAsNumber = d3.format(",");
 
-		
 
 			console.log(d3.max(dataset, function(d) { return +d.koi_fwm_sdec; }));
 
@@ -167,7 +166,10 @@ for (j = 0; j<cumulative.length;j++)
 						.text("ID: " + d.kepler_name);
 
 					div.append("p")
-						.text("Temperature: " + formatAsNumber(d.koi_teq));	
+						.text("Temperature: " + formatAsNumber(d.koi_teq));
+
+					div.append("p")
+						.text("Radius: " + formatAsNumber(rScale(+d.rade)));	
 
 
 			   
@@ -194,6 +196,31 @@ for (j = 0; j<cumulative.length;j++)
 			   
 		// });
 
+			function updateSlider(slideAmount) 
+				{
+					var circles = svg.selectAll("circle")
+    				.data(dataset, function(d) { 
+    					if(rScale(+d.rade)< +slideAmount)
+	    					{
+	    						return d.kepler_name;
+	    					}
+    					});
+
+					//Exit…
+					circles.exit()
+						.transition()
+						.duration(500)
+						.style("opacity", 0)
+						.style("pointer-events", "none");
+						// .remove();
+
+					circles.transition()
+							.duration(500)
+							.style("opacity", 1)
+							.style("pointer-events", "all");
+
+					
+				};
 
 			 function updateData() {
 			 	d3.select("#tooltip").classed("hidden", true);

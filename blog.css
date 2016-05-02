@@ -57,6 +57,13 @@ div.tooltip p {
     color: black; 
     border: 2px solid #008CBA;
 }
+.button2:focus {
+    background-color: #3399CC;
+    color: white;
+}
+.button2:hover{
+    box-shadow: 0 12px 16px 0 rgba(0,0,0,0.24), 0 17px 50px 0 rgba(0,0,0,0.19);
+}
 
 * {
     -webkit-box-sizing: border-box;

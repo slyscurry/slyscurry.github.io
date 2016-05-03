@@ -60,7 +60,7 @@ for (j = 0; j<cumulative.length;j++)
     }
 }
 
-// console.log(mergedJSON);
+
 //Width and height
 			var w = 1200;
 			var h = 700;
@@ -95,7 +95,7 @@ for (j = 0; j<cumulative.length;j++)
 
 			// (mergedJSON, function(error, dataset) {
 			// if (error) return console.warn(error);
-			console.log(dataset);
+			// console.log(dataset);
 
 			var xScale = d3.scale.linear()
 							.domain([d3.min(dataset, function(d) { return +d.koi_fwm_sdec; }), d3.max(dataset, function(d) { return +d.koi_fwm_sdec; })])
@@ -109,7 +109,7 @@ for (j = 0; j<cumulative.length;j++)
 
 			var colorScale = d3.scale.quantize()
 							.domain([d3.min(dataset, function(d) { return +d.koi_teq; }), d3.max(dataset, function(d) { return +d.koi_teq; })])
-							.range(["#3399CC", "#669999", "#CCCCCC","#CC9999","#CC6666"])
+							.range(["#3399CC", "#669999","#CCCCCC","#CC9999","#CC6666"])
 							;
 
 			var rScale = d3.scale.linear()
@@ -168,8 +168,8 @@ for (j = 0; j<cumulative.length;j++)
 					div.append("p")
 						.text("Temperature: " + formatAsNumber(d.koi_teq));
 
-					div.append("p")
-						.text("Radius: " + formatAsNumber(rScale(+d.rade)));	
+					// div.append("p")
+					// 	.text("Radius: " + formatAsNumber(rScale(+d.rade)));	
 
 
 			   
@@ -198,54 +198,91 @@ for (j = 0; j<cumulative.length;j++)
 
 			function updateSlider(slideAmount) 
 				{
-					var circles = svg.selectAll("circle")
-    				.data(dataset, function(d) { 
-    					if(rScale(+d.rade)< +slideAmount)
-	    					{
-	    						return d.kepler_name;
-	    					}
-    					});
+					// var display = document.getElementById("chosen");
+					// //show the amount
+					// display.innerHTML=slideAmount;
+					var circles = svg.selectAll("circle");
+    	// 			.data(dataset, function(d) { 
+    	// 				if(rScale(+d.rade)< +slideAmount)
+	    // 					{
+	    // 						return d.kepler_name;
+	    // 					}
+    	// 				});
+    	// 			console.log(circles);
 
-					//Exit…
-					circles.exit()
-						.transition()
-						.duration(500)
-						.style("opacity", 0)
-						.style("pointer-events", "none");
+					// //Exit…
+					// circles.exit()
+					// 	.transition()
+					// 	.duration(500)
+					// 	.style("opacity", 0)
+					// 	.style("pointer-events", "none");
 						// .remove();
 
 					circles.transition()
 							.duration(500)
-							.style("opacity", 1)
+							.style("opacity", function(d) {
+								if(rScale(+d.rade)<= +slideAmount)
+			    					{
+			    						return 1
+			    					}
+			    					else
+			    					{
+			    						return 0
+			    					}
+    							})
 							.style("pointer-events", "all");
 
 					
 				};
 
 			 function updateData() {
-			 	d3.select("#tooltip").classed("hidden", true);
+			 	// d3.select("#tooltip").classed("hidden", true);
 
 				// d3.csv(habitable_planets, function(error, dataset) {
 				// 	if (error) return console.warn(error);
 
 
-					var circles = svg.selectAll("circle")
-    				.data(dataset, function(d) { 
-    					if(d.koi_teq>=180 && d.koi_teq <=310)
-	    					{
-	    						return d.kepler_name;
-	    					}
-    					});
+					var circles = svg.selectAll("circle");
+    				// .data(dataset, function(d) { 
+    				// 	if(d.koi_teq>=180 && d.koi_teq <=310)
+	    			// 		{
+	    			// 			return d.kepler_name;
+	    			// 		}
+    				// 	});
+
 
 					//Exit…
-					circles.exit()
-						.transition()
-						.duration(500)
-						.style("opacity", 0)
-						.style("pointer-events", "none");
-						// .remove();
+					// circles.exit()
+					// 	.transition()
+					// 	.duration(500)
+					// 	.style("opacity", 0)
+					// 	.style("pointer-events", "none");
+					// 	// .remove();
 
-				       console.log(dataset.length);
+				 //       console.log(dataset.length);
+
+				 	circles.transition()
+							.duration(500)
+							.style("opacity", function(d) {
+								if(d.koi_teq>=180 && d.koi_teq <=310)
+			    					{
+			    						return 1
+			    					}
+			    					else
+			    					{
+			    						return 0
+			    					}
+    							})
+							.style("pointer-events", function(d) {
+								if(d.koi_teq>=180 && d.koi_teq <=310)
+			    					{
+			    						return "all"
+			    					}
+			    					else
+			    					{
+			    						return "none"
+			    					}
+    							})
 
 
 

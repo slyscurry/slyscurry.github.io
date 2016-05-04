@@ -200,8 +200,16 @@ for (j = 0; j<cumulative.length;j++)
 
 	    				if (clicked == 0)
 	    				{
+	    					var colorScaleHab = d3.scale.quantize()
+							.domain([180, 310])
+							.range(["#393b79","#9c9ede","#d6616b","#843c39"])
+							;
+
 	    					circles.transition()
 								.duration(500)
+								.attr("fill", function(d) {
+								return colorScaleHab(d.koi_teq);
+								})
 								.style("opacity", function(d) {
 									if(d.koi_teq>=180 && d.koi_teq <=310  && d.radeFlag == 1)
 				    					{
@@ -235,6 +243,9 @@ for (j = 0; j<cumulative.length;j++)
 
 	    					circles.transition()
 								.duration(500)
+								.attr("fill", function(d) {
+								return colorScale(d.koi_teq);
+								})
 								.attr("circle",
 									function(d) { 
 									d.habFlag = 1;

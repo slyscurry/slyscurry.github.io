@@ -67,6 +67,7 @@ for (j = 0; j<cumulative.length;j++)
 //Width and height
 			var w = 1200;
 			var h = 700;
+			var clicked = 0;
 
 
 			var svg = d3.select("div#container")
@@ -197,32 +198,58 @@ for (j = 0; j<cumulative.length;j++)
     				.data(dataset);
     				
 
-				 	circles.transition()
-							.duration(500)
-							.style("opacity", function(d) {
-								if(d.koi_teq>=180 && d.koi_teq <=310  && d.radeFlag == 1)
-			    					{
-			    						d.habFlag = 1
-			    						return 1
-			    					}
-			    					else
-			    					{
-			    						d.habFlag = 0
-			    						return 0
-			    					}
-    							})
-							.style("pointer-events", function(d) {
-								if(d.koi_teq>=180 && d.koi_teq <=310 && d.radeFlag == 1)
-			    					{
-			    						return "all"
-			    					}
-			    					else
-			    					{
-			    						return "none"
-			    					}
-    							})
+	    				if (clicked == 0)
+	    				{
+	    					circles.transition()
+								.duration(500)
+								.style("opacity", function(d) {
+									if(d.koi_teq>=180 && d.koi_teq <=310  && d.radeFlag == 1)
+				    					{
+				    						d.habFlag = 1
+				    						return 1
+				    					}
+				    					else
+				    					{
+				    						d.habFlag = 0
+				    						return 0
+				    					}
+	    							})
+								.style("pointer-events", function(d) {
+									if(d.koi_teq>=180 && d.koi_teq <=310 && d.radeFlag == 1)
+				    					{
+				    						return "all"
+				    					}
+				    					else
+				    					{
+				    						return "none"
+				    					}
+	    							})
+								clicked = 1;
 
+							  d3.selectAll(".button2")
+								.style("background-color","#3399CC")
+								.style("color","white");
+	    				}
+	    				else
+	    				{
 
+	    					circles.transition()
+								.duration(500)
+								.attr("circle",
+									function(d) { 
+									d.habFlag = 1;
+									d.radeFlag = 1;
+								})
+								.style("opacity", 1)
+								.style("pointer-events", "all");
+
+								clicked = 0;
+
+								d3.selectAll(".button2")
+								.style("background-color","white")
+								.style("color","black");
+	    				}
+				 	
   					};
 				
 

@@ -45,6 +45,9 @@ for (j = 0; j<cumulative.length;j++)
 
     for (i = 0; i<exoplanet.length;i++)
     {
+    	mergeItem.habFlag = 1;
+        mergeItem.radeFlag = 1;
+
        if(exoplanet[i].pl_rade != null)
           {
             if(exoplanet[i].kepler_name == cumulativeKeplerName)
@@ -65,20 +68,6 @@ for (j = 0; j<cumulative.length;j++)
 			var w = 1200;
 			var h = 700;
 
-			// var low_temp = -1000000000;
-			// var high_temp = 1000000000;
-
-
-			// var planets_json = "http://www.asterank.com/api/kepler?query={}&limit=0";
-
-			// var planets_json = "http://exoplanetarchive.ipac.caltech.edu/cgi-bin/nstedAPI/nph-nstedAPI?table=cumulative&select=koi_fwm_sdec,koi_fwm_sra,koi_teq,koi_prad&where=koi_disposition%20like%20%27CONFIRMED%27%20&format=json";
-			// var habitable_planets = "habitable.csv";
-			//Create SVG element
-			// var svg = d3.select("body")
-			// 			.append("svg")
-			// 			.attr("width", w)
-			// 			.attr("height", h)
-			// 			.attr("class","content");
 
 			var svg = d3.select("div#container")
 						.append("svg")
@@ -93,9 +82,7 @@ for (j = 0; j<cumulative.length;j++)
 
 
 
-			// (mergedJSON, function(error, dataset) {
-			// if (error) return console.warn(error);
-			// console.log(dataset);
+
 
 			var xScale = d3.scale.linear()
 							.domain([d3.min(dataset, function(d) { return +d.koi_fwm_sdec; }), d3.max(dataset, function(d) { return +d.koi_fwm_sdec; })])
@@ -141,24 +128,9 @@ for (j = 0; j<cumulative.length;j++)
 		   		})
 		   		.on("mouseover", function(d) {
 
-					//Update the tooltip position and value
-					// d3.select("#tooltip")
-					// 	.style("left", xScale(+d.koi_fwm_sdec)+10 + "px")
-					// 	.style("top", yScale(+d.RA)+10 + "px")						
-					// 	.select("#value")
-					// 	.text("ID: " + d.KOI);
-
-					// d3.select("#tooltip")
-					// 	.select("#temperature")
-					// 	.text("Temperature: " + formatAsNumber(d.TPLANET));
-
-					div
-						// .transition()		
-						// .duration(200)		
-						.style("opacity", 1);	
+					div.style("opacity", 1);	
 
 					div.text("Kepler Object Details")
-						// .style("font-weight", "bold")
 						.style("left", (d3.event.pageX) + "px")		
 						.style("top", (d3.event.pageY - 28) + "px");
 
@@ -168,24 +140,10 @@ for (j = 0; j<cumulative.length;j++)
 					div.append("p")
 						.text("Temperature: " + formatAsNumber(d.koi_teq));
 
-					// div.append("p")
-					// 	.text("Radius: " + formatAsNumber(rScale(+d.rade)));	
-
-
-			   
-					// //Show the tooltip
-					// d3.select("#tooltip").classed("hidden", false);
-
 			   })
 			   .on("mouseout", function() {
 			   
-					//Hide the tooltip
-					// d3.select("#tooltip").classed("hidden", true);
-
-					div
-						// .transition()		
-		    //             .duration(500)		
-		                .style("opacity", 0);
+					div.style("opacity", 0);
 					
 			   })
 
@@ -193,88 +151,32 @@ for (j = 0; j<cumulative.length;j++)
 
 
 
-			   
-		// });
 
 			function updateSlider(slideAmount) 
 				{
-					// var display = document.getElementById("chosen");
-					// //show the amount
-					// display.innerHTML=slideAmount;
-					var circles = svg.selectAll("circle");
-    	// 			.data(dataset, function(d) { 
-    	// 				if(rScale(+d.rade)< +slideAmount)
-	    // 					{
-	    // 						return d.kepler_name;
-	    // 					}
-    	// 				});
-    	// 			console.log(circles);
-
-					// //Exit…
-					// circles.exit()
-					// 	.transition()
-					// 	.duration(500)
-					// 	.style("opacity", 0)
-					// 	.style("pointer-events", "none");
-						// .remove();
+					
+					var circles =svg.selectAll("circle")
+    								.data(dataset);
+    	
 
 					circles.transition()
 							.duration(500)
 							.style("opacity", function(d) {
-								if(rScale(+d.rade)<= +slideAmount)
+								if(rScale(+d.rade) <= +slideAmount && d.habFlag == 1)
 			    					{
-			    						return 1
+			    						d.radeFlag = 1
+			    						return 1;
+			    						
 			    					}
 			    					else
 			    					{
-			    						return 0
-			    					}
-    							})
-							.style("pointer-events", "all");
-
-					
-				};
-
-			 function updateData() {
-			 	// d3.select("#tooltip").classed("hidden", true);
-
-				// d3.csv(habitable_planets, function(error, dataset) {
-				// 	if (error) return console.warn(error);
-
-
-					var circles = svg.selectAll("circle");
-    				// .data(dataset, function(d) { 
-    				// 	if(d.koi_teq>=180 && d.koi_teq <=310)
-	    			// 		{
-	    			// 			return d.kepler_name;
-	    			// 		}
-    				// 	});
-
-
-					//Exit…
-					// circles.exit()
-					// 	.transition()
-					// 	.duration(500)
-					// 	.style("opacity", 0)
-					// 	.style("pointer-events", "none");
-					// 	// .remove();
-
-				 //       console.log(dataset.length);
-
-				 	circles.transition()
-							.duration(500)
-							.style("opacity", function(d) {
-								if(d.koi_teq>=180 && d.koi_teq <=310)
-			    					{
-			    						return 1
-			    					}
-			    					else
-			    					{
-			    						return 0
+			    						d.radeFlag = 0
+			    						return 0;
+			    						
 			    					}
     							})
 							.style("pointer-events", function(d) {
-								if(d.koi_teq>=180 && d.koi_teq <=310)
+								if(rScale(+d.rade) <= +slideAmount && d.habFlag == 1)
 			    					{
 			    						return "all"
 			    					}
@@ -285,34 +187,64 @@ for (j = 0; j<cumulative.length;j++)
     							})
 
 
+					
+				};
 
-  					// });
+			 function updateData() {
+			 	
+
+					var circles = svg.selectAll("circle")
+    				.data(dataset);
+    				
+
+				 	circles.transition()
+							.duration(500)
+							.style("opacity", function(d) {
+								if(d.koi_teq>=180 && d.koi_teq <=310  && d.radeFlag == 1)
+			    					{
+			    						d.habFlag = 1
+			    						return 1
+			    					}
+			    					else
+			    					{
+			    						d.habFlag = 0
+			    						return 0
+			    					}
+    							})
+							.style("pointer-events", function(d) {
+								if(d.koi_teq>=180 && d.koi_teq <=310 && d.radeFlag == 1)
+			    					{
+			    						return "all"
+			    					}
+			    					else
+			    					{
+			    						return "none"
+			    					}
+    							})
+
+
   					};
 				
 
 			function showAllData() {
 
-				// d3.csv(planets_csv, function(error, dataset) {
-				// if (error) return console.warn(error);
-		
-
-				console.log(d3.max(dataset, function(d) { return +d.koi_fwm_sdec; }));
-
-
-				//Select…
+				
 				var circles = svg.selectAll("circle")
-	    				.data(dataset, function(d) { return d.kepler_name; });
+    				.data(dataset);
 
 
 			   		//Update…
 					circles.transition()
 							.duration(500)
+							.attr("circle",
+								function(d) { 
+								d.habFlag = 1;
+								d.radeFlag = 1;
+							})
 							.style("opacity", 1)
 							.style("pointer-events", "all");
 
-
-
-  					// });
+					
   					};
 			 
 				

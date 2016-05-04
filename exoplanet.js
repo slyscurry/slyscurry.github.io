@@ -97,7 +97,7 @@ for (j = 0; j<cumulative.length;j++)
 
 			var colorScale = d3.scale.quantize()
 							.domain([d3.min(dataset, function(d) { return +d.koi_teq; }), d3.max(dataset, function(d) { return +d.koi_teq; })])
-							.range(["#3399CC", "#669999","#CCCCCC","#CC9999","#CC6666"])
+							.range(["#393b79","#9c9ede","#d6616b","#843c39"])
 							;
 
 			var rScale = d3.scale.linear()
@@ -227,7 +227,7 @@ for (j = 0; j<cumulative.length;j++)
 								clicked = 1;
 
 							  d3.selectAll(".button2")
-								.style("background-color","#3399CC")
+								.style("background-color","#393b79")
 								.style("color","white");
 	    				}
 	    				else

@@ -108,7 +108,6 @@ for (j = 0; j<cumulative.length;j++)
 			var formatAsNumber = d3.format(",");
 
 
-			console.log(d3.max(dataset, function(d) { return +d.koi_fwm_sdec; }));
 
 
 			svg.selectAll("circle")
@@ -152,7 +151,6 @@ for (j = 0; j<cumulative.length;j++)
 
 
 
-
 			function updateSlider(slideAmount) 
 				{
 					
@@ -163,7 +161,9 @@ for (j = 0; j<cumulative.length;j++)
 					circles.transition()
 							.duration(500)
 							.style("opacity", function(d) {
-								if(rScale(+d.rade) <= +slideAmount && d.habFlag == 1)
+								if(d.habFlag == 1)
+								{
+									if(rScale(+d.rade) <= +slideAmount)
 			    					{
 			    						d.radeFlag = 1
 			    						return 1;
@@ -172,10 +172,16 @@ for (j = 0; j<cumulative.length;j++)
 			    					else
 			    					{
 			    						d.radeFlag = 0
-			    						return 0;
-			    						
+		    							return 0;
+
 			    					}
-    							})
+								}
+		    					else
+		    					{
+		    						return 0;
+		    						
+			    				}
+    						})
 							.style("pointer-events", function(d) {
 								if(rScale(+d.rade) <= +slideAmount && d.habFlag == 1)
 			    					{
@@ -186,7 +192,6 @@ for (j = 0; j<cumulative.length;j++)
 			    						return "none"
 			    					}
     							})
-
 
 					
 				};
@@ -246,12 +251,20 @@ for (j = 0; j<cumulative.length;j++)
 								.attr("fill", function(d) {
 								return colorScale(d.koi_teq);
 								})
-								.attr("circle",
-									function(d) { 
-									d.habFlag = 1;
-									d.radeFlag = 1;
-								})
-								.style("opacity", 1)
+								.style("opacity", function(d) 
+									{
+										d.habFlag = 1;
+
+										if(d.radeFlag==1)
+										{
+											return 1;
+										}
+										else
+										{
+											return 0;
+										}
+
+									})
 								.style("pointer-events", "all");
 
 								clicked = 0;
@@ -259,30 +272,59 @@ for (j = 0; j<cumulative.length;j++)
 								d3.selectAll(".button2")
 								.style("background-color","white")
 								.style("color","black");
+
+								// updateSlider(document.getElementById("slide").value);
+
+								// circles.transition()
+								// .duration(500)
+								// .attr("fill", function(d) {
+								// 	if(d.radeFlag < 1)
+								// 	{
+										
+								// 		return colorScale(d.koi_teq);
+								// 		d.habFlag = 1;
+								// 	}
+								// })
+								// .style("opacity", function(d) {
+								// 	if(d.radeFlag < 1)
+								// 	{
+								// 		return 1
+								// 	}
+								// })
+								// .style("pointer-events",  function(d) {
+								// 	if(d.radeFlag < 1)
+								// 	{
+								// 		return "all"
+								// 	}
+								// 	else
+								// 	{
+								// 		return "none"
+								// 	}
+								// });
 	    				}
 				 	
   					};
 				
 
-			function showAllData() {
+			// function showAllData() {
 
 				
-				var circles = svg.selectAll("circle")
-    				.data(dataset);
+			// 	var circles = svg.selectAll("circle")
+   //  				.data(dataset);
 
 
-			   		//Update…
-					circles.transition()
-							.duration(500)
-							.attr("circle",
-								function(d) { 
-								d.habFlag = 1;
-								d.radeFlag = 1;
-							})
-							.style("opacity", 1)
-							.style("pointer-events", "all");
+			//    		//Update…
+			// 		circles.transition()
+			// 				.duration(500)
+			// 				.attr("circle",
+			// 					function(d) { 
+			// 					d.habFlag = 1;
+			// 					d.radeFlag = 1;
+			// 				})
+			// 				.style("opacity", 1)
+			// 				.style("pointer-events", "all");
 
 					
-  					};
+  	// 				};
 			 
 				

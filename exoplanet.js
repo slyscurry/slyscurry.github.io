@@ -265,7 +265,18 @@ for (j = 0; j<cumulative.length;j++)
 										}
 
 									})
-								.style("pointer-events", "all");
+								.style("pointer-events", function(d) 
+									{
+										if(d.radeFlag==1)
+										{
+											return "all";
+										}
+										else
+										{
+											return "none";
+										}
+
+									});
 
 								clicked = 0;
 

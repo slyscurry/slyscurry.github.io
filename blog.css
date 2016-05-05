@@ -57,6 +57,10 @@ div.tooltip p {
     color: black; 
     border: 2px solid #393b79;
 }
+.legend rect {
+  fill:white;
+  stroke:black;
+  opacity:0.8;}
 /*.button2:focus {
     background-color: #3399CC;
     color: white;

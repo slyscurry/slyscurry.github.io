@@ -161,23 +161,23 @@ for (j = 0; j<cumulative.length;j++)
 					circles.transition()
 							.duration(500)
 							.style("opacity", function(d) {
-								if(d.habFlag == 1)
+								if(rScale(+d.rade) <= +slideAmount)
 								{
-									if(rScale(+d.rade) <= +slideAmount)
+									if(d.habFlag == 1)
 			    					{
 			    						d.radeFlag = 1
 			    						return 1;
 			    						
 			    					}
 			    					else
-			    					{
-			    						d.radeFlag = 0
+			    					{	
+			    						d.radeFlag = 1
 		    							return 0;
-
 			    					}
 								}
 		    					else
 		    					{
+		    						d.radeFlag = 0
 		    						return 0;
 		    						
 			    				}
@@ -216,17 +216,25 @@ for (j = 0; j<cumulative.length;j++)
 								return colorScaleHab(d.koi_teq);
 								})
 								.style("opacity", function(d) {
-									if(d.koi_teq>=180 && d.koi_teq <=310  && d.radeFlag == 1)
-				    					{
-				    						d.habFlag = 1
-				    						return 1
-				    					}
-				    					else
-				    					{
-				    						d.habFlag = 0
-				    						return 0
-				    					}
-	    							})
+									if(d.koi_teq>=180 && d.koi_teq <=310)
+										{
+											if(d.radeFlag == 1)
+					    					{
+					    						d.habFlag = 1
+					    						return 1
+					    					}
+					    					else
+					    					{
+					    						d.habFlag = 1
+					    						return 0
+					    					}
+		    							}
+		    						else
+			    						{
+			    							d.habFlag = 0
+			    							return 0
+			    						}
+									})
 								.style("pointer-events", function(d) {
 									if(d.koi_teq>=180 && d.koi_teq <=310 && d.radeFlag == 1)
 				    					{
@@ -284,58 +292,6 @@ for (j = 0; j<cumulative.length;j++)
 								.style("background-color","white")
 								.style("color","black");
 
-								// updateSlider(document.getElementById("slide").value);
-
-								// circles.transition()
-								// .duration(500)
-								// .attr("fill", function(d) {
-								// 	if(d.radeFlag < 1)
-								// 	{
-										
-								// 		return colorScale(d.koi_teq);
-								// 		d.habFlag = 1;
-								// 	}
-								// })
-								// .style("opacity", function(d) {
-								// 	if(d.radeFlag < 1)
-								// 	{
-								// 		return 1
-								// 	}
-								// })
-								// .style("pointer-events",  function(d) {
-								// 	if(d.radeFlag < 1)
-								// 	{
-								// 		return "all"
-								// 	}
-								// 	else
-								// 	{
-								// 		return "none"
-								// 	}
-								// });
 	    				}
 				 	
   					};
-				
-
-			// function showAllData() {
-
-				
-			// 	var circles = svg.selectAll("circle")
-   //  				.data(dataset);
-
-
-			//    		//Update…
-			// 		circles.transition()
-			// 				.duration(500)
-			// 				.attr("circle",
-			// 					function(d) { 
-			// 					d.habFlag = 1;
-			// 					d.radeFlag = 1;
-			// 				})
-			// 				.style("opacity", 1)
-			// 				.style("pointer-events", "all");
-
-					
-  	// 				};
-			 
-				

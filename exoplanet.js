@@ -68,6 +68,8 @@ for (j = 0; j<cumulative.length;j++)
 			var w = 1200;
 			var h = 700;
 			var clicked = 0;
+			var legendRectSize = 18;                                  // NEW
+        	var legendSpacing = 4;                                    // NEW
 
 
 			var svg = d3.select("div#container")
@@ -96,19 +98,19 @@ for (j = 0; j<cumulative.length;j++)
 
 
 			var colorScale = d3.scale.quantize()
-							.domain([d3.min(dataset, function(d) { return +d.koi_teq; }), d3.max(dataset, function(d) { return +d.koi_teq; })])
-							.range(["#393b79","#9c9ede","#d6616b","#843c39"])
+							.domain([d3.min(dataset, function(d) { return +d.koi_teq; }), d3.mean(dataset, function(d) { return +d.koi_teq; }) + (2 * d3.deviation(dataset, function(d) { return +d.koi_teq; }))])
+							.range(["#756bb1","#9e9ac8","#ad494a","#843c39"])
 							;
 
 			var rScale = d3.scale.linear()
-								 .domain([0, d3.max(dataset, function(d) { return +d.rade; })])
-								 .range([3, 15]);
+								 .domain([d3.min(dataset, function(d) { return +d.rade; }), d3.max(dataset, function(d) { return +d.rade; })])
+							     .range([4,15]);
 
 
 			var formatAsNumber = d3.format(",");
 
 
-
+console.log(d3.min(dataset, function(d) { return +d.rade; }));
 
 			svg.selectAll("circle")
 			   .data(dataset)
@@ -140,6 +142,9 @@ for (j = 0; j<cumulative.length;j++)
 					div.append("p")
 						.text("Temperature: " + formatAsNumber(d.koi_teq));
 
+					div.append("p")
+						.text("Earth Radii: " + formatAsNumber(d.rade));
+
 			   })
 			   .on("mouseout", function() {
 			   
@@ -149,7 +154,47 @@ for (j = 0; j<cumulative.length;j++)
 
 		   		;
 
+	        var legend = svg.selectAll('.legend')
+	          .data(colorScale.range().map(function(color) {
+			      var d = colorScale.invertExtent(color);
+			      if (d[0] == null) d[0] = x.domain()[0];
+			      if (d[1] == null) d[1] = x.domain()[1];
+			      return d;
+			    }))
+	          .enter()
+	          .append('g')
+	          .attr('class', 'legend');
+	         
 
+	        legend.append('rect')
+	          .attr('width', legendRectSize)
+	          .attr('height', legendRectSize)
+	          .style('fill', function(d) { return colorScale(d[0]); })
+	          .style('stroke', function(d) { return colorScale(d[0]); })
+	          .attr('x', 0)
+	          .attr('y', function(d,i){
+	          return i*legendRectSize;
+	          });
+
+
+			// return quantize thresholds for the key    
+			var qrange = function(max, num) {
+			    var a = [];
+			    for (var i=0; i<num; i++) {
+			        a.push(i*max/num);
+			    }
+			    return a;
+			}
+
+			var ranges = colorScale.range().length;
+
+          legend.selectAll("text")
+		    .data(qrange(colorScale.domain()[1], ranges))
+		    .enter().append("text")
+		    .attr("x", legendRectSize + 3)
+		    .attr("y", function(d, i) { return (i+1)*legendRectSize-2; })
+		    .attr('class','post-description')
+		    .text(function(d) { return formatAsNumber(Math.round(d)); });
 
 			function updateSlider(slideAmount) 
 				{
@@ -163,16 +208,15 @@ for (j = 0; j<cumulative.length;j++)
 							.style("opacity", function(d) {
 								if(rScale(+d.rade) <= +slideAmount)
 								{
+									d.radeFlag = 1;
 									if(d.habFlag == 1)
 			    					{
-			    						d.radeFlag = 1
 			    						return 1;
 			    						
 			    					}
 			    					else
 			    					{	
-			    						d.radeFlag = 1
-		    							return 0;
+			    						return 0;
 			    					}
 								}
 		    					else
@@ -185,11 +229,11 @@ for (j = 0; j<cumulative.length;j++)
 							.style("pointer-events", function(d) {
 								if(rScale(+d.rade) <= +slideAmount && d.habFlag == 1)
 			    					{
-			    						return "all"
+			    						return "all";
 			    					}
 			    					else
 			    					{
-			    						return "none"
+			    						return "none";
 			    					}
     							})
 
@@ -205,10 +249,9 @@ for (j = 0; j<cumulative.length;j++)
 
 	    				if (clicked == 0)
 	    				{
-	    					var colorScaleHab = d3.scale.quantize()
-							.domain([180, 310])
-							.range(["#393b79","#9c9ede","#d6616b","#843c39"])
-							;
+
+	    					colorScaleHab = colorScale.copy();
+	    					colorScaleHab.domain([180, 400]);
 
 	    					circles.transition()
 								.duration(500)
@@ -218,31 +261,30 @@ for (j = 0; j<cumulative.length;j++)
 								.style("opacity", function(d) {
 									if(d.koi_teq>=180 && d.koi_teq <=310)
 										{
+											d.habFlag = 1;
 											if(d.radeFlag == 1)
 					    					{
-					    						d.habFlag = 1
-					    						return 1
+					    						return 1;
 					    					}
 					    					else
 					    					{
-					    						d.habFlag = 1
-					    						return 0
+					    						return 0;
 					    					}
 		    							}
 		    						else
 			    						{
 			    							d.habFlag = 0
-			    							return 0
+			    							return 0;
 			    						}
 									})
 								.style("pointer-events", function(d) {
 									if(d.koi_teq>=180 && d.koi_teq <=310 && d.radeFlag == 1)
 				    					{
-				    						return "all"
+				    						return "all";
 				    					}
 				    					else
 				    					{
-				    						return "none"
+				    						return "none";
 				    					}
 	    							})
 								clicked = 1;

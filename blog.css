@@ -28,6 +28,12 @@ div.tooltip {
     font-family: sans-serif;
     font-weight: bold;
 }
+.legend {
+    font-size: 12px;
+  }
+  rect {
+    stroke-width: 2;
+  }
 
 /*div.tooltip {
     display: none;

@@ -246,7 +246,7 @@ console.log(d3.min(dataset, function(d) { return +d.rade; }));
 					var circles = svg.selectAll("circle")
     				.data(dataset);
 
-    				var updateDuration = 500;
+    				var updateDuration = 1;
 
 	    				if (clicked == 0)
 	    				{

@@ -245,7 +245,8 @@ console.log(d3.min(dataset, function(d) { return +d.rade; }));
 
 					var circles = svg.selectAll("circle")
     				.data(dataset);
-    				
+
+    				var updateDuration = 500;
 
 	    				if (clicked == 0)
 	    				{
@@ -254,7 +255,10 @@ console.log(d3.min(dataset, function(d) { return +d.rade; }));
 	    					colorScaleHab.domain([180, 400]);
 
 	    					circles.transition()
-								.duration(500)
+								.delay(function(d, i) {
+									   return i * 1;		// One-tenth of an additional second delay for each subsequent element 
+								   })
+      							.duration(updateDuration)
 								.attr("fill", function(d) {
 								return colorScaleHab(d.koi_teq);
 								})

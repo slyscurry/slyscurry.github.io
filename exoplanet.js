@@ -113,7 +113,6 @@ for (j = 0; j<cumulative.length;j++)
 	    	colorScaleHab.domain([180, 400]);
 
 
-console.log(d3.min(dataset, function(d) { return +d.rade; }));
 
 			svg.selectAll("circle")
 			   .data(dataset)
@@ -157,19 +156,21 @@ console.log(d3.min(dataset, function(d) { return +d.rade; }));
 
 
 
+		
 		column("legend", colorScale);
 		column("legend", colorScaleHab);
 
 		 function column(title, scale) {
 				  var legend = d3.legend.color()
 				  	.shapeHeight(30)
+				  	.title("Temperature (k)")
 				  	// .labelDelimiter("    ")
 				    .labelFormat(d3.format(",.0f"))
 				    .cells(10)
 				    .scale(scale);
 
-				  var div = d3.select("body").append("div")
-				    .attr("class", "column");
+				  // var div = d3.select("body").append("div")
+				  //   .attr("class", "column");
 
 				  // div.append("h4").text(title);
 				    
@@ -180,10 +181,13 @@ console.log(d3.min(dataset, function(d) { return +d.rade; }));
 
 				  	svg.append("g")
 				    .attr("class", "legendQuant")
-				    .attr("transform", "translate("+(w-150)+",20)");
+				    .attr("transform", "translate("+(w-150)+",20)")
+				    ;
 
 				    svg.select(".legendQuant")
 				    .call(legend);
+
+				   
 					}
 					else
 					{

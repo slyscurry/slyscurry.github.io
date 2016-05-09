@@ -68,8 +68,8 @@ for (j = 0; j<cumulative.length;j++)
 			var w = 1200;
 			var h = 700;
 			var clicked = 0;
-			var legendRectSize = 18;                                  // NEW
-        	var legendSpacing = 4;                                    // NEW
+			// var legendRectSize = 18;                                  // NEW
+   //      	var legendSpacing = 4;                                    // NEW
 
 
 			var svg = d3.select("div#container")
@@ -171,7 +171,7 @@ console.log(d3.min(dataset, function(d) { return +d.rade; }));
 				  var div = d3.select("body").append("div")
 				    .attr("class", "column");
 
-				  div.append("h4").text(title);
+				  // div.append("h4").text(title);
 				    
 				  // var svg = div.append("svg");
 

@@ -109,6 +109,9 @@ for (j = 0; j<cumulative.length;j++)
 
 			var formatAsNumber = d3.format(",");
 
+			colorScaleHab = colorScale.copy();
+	    	colorScaleHab.domain([180, 400]);
+
 
 console.log(d3.min(dataset, function(d) { return +d.rade; }));
 
@@ -152,53 +155,15 @@ console.log(d3.min(dataset, function(d) { return +d.rade; }));
 					
 			   });
 
-	  //       var legend = svg.selectAll('.legend')
-	  //         .data(colorScale.range().map(function(color) {
-			//       var d = colorScale.invertExtent(color);
-			//       if (d[0] == null) d[0] = x.domain()[0];
-			//       if (d[1] == null) d[1] = x.domain()[1];
-			//       return d;
-			//     }))
-	  //         .enter()
-	  //         .append('g')
-	  //         .attr('class', 'legend');
-	         
-
-	  //       legend.append('rect')
-	  //         .attr('width', legendRectSize)
-	  //         .attr('height', legendRectSize)
-	  //         .style('fill', function(d) { return colorScale(d[0]); })
-	  //         .style('stroke', function(d) { return colorScale(d[0]); })
-	  //         .attr('x', 0)
-	  //         .attr('y', function(d,i){
-	  //         return i*legendRectSize;
-	  //         });
-
-
-			// // return quantize thresholds for the key    
-			// var qrange = function(max, num) {
-			//     var a = [];
-			//     for (var i=0; i<num; i++) {
-			//         a.push(i*max/num);
-			//     }
-			//     return a;
-			// }
-
-			// var ranges = colorScale.range().length;
-
-   //        legend.selectAll("text")
-		 //    .data(qrange(colorScale.domain()[1], ranges))
-		 //    .enter().append("text")
-		 //    .attr("x", legendRectSize + 3)
-		 //    .attr("y", function(d, i) { return (i+1)*legendRectSize-2; })
-		 //    .attr('class','post-description')
-		 //    .text(function(d) { return formatAsNumber(Math.round(d)); });
 
 
 		column("legend", colorScale);
+		column("legend", colorScaleHab);
 
 		 function column(title, scale) {
 				  var legend = d3.legend.color()
+				  	.shapeHeight(30)
+				  	// .labelDelimiter("    ")
 				    .labelFormat(d3.format(",.0f"))
 				    .cells(10)
 				    .scale(scale);
@@ -213,15 +178,9 @@ console.log(d3.min(dataset, function(d) { return +d.rade; }));
 				  if(scale == colorScale)
 				  	{
 
-				  	svg.select(".legendQuantHab")
-				    .attr("opacity",0);
-
-				  	svg.select(".legendQuant")
-				    .attr("opacity",1);
-
 				  	svg.append("g")
 				    .attr("class", "legendQuant")
-				    .attr("transform", "translate(20,20)");
+				    .attr("transform", "translate("+(w-150)+",20)");
 
 				    svg.select(".legendQuant")
 				    .call(legend);
@@ -231,13 +190,13 @@ console.log(d3.min(dataset, function(d) { return +d.rade; }));
 
 					svg.append("g")
 				    .attr("class", "legendQuantHab")
-				    .attr("transform", "translate(20,20)");
-
-				    svg.select(".legendQuant")
-				    .attr("opacity",0);
+				    .attr("transform", "translate("+(w-150)+",20)");
 
 				    svg.select(".legendQuantHab")
 				    .call(legend);
+
+				    svg.select(".legendQuantHab")
+				    .attr("opacity",0);
 
 					}
 
@@ -299,10 +258,15 @@ console.log(d3.min(dataset, function(d) { return +d.rade; }));
 	    				if (clicked == 0)
 	    				{
 
-	    					colorScaleHab = colorScale.copy();
-	    					colorScaleHab.domain([180, 400]);
+	    					svg.select(".legendQuant")
+	    					.transition()
+							.duration(500)
+				    		.attr("opacity",0);
 
-	    					column("legend", colorScaleHab);
+	    					svg.select(".legendQuantHab")
+	    					.transition()
+							.duration(500)
+				    		.attr("opacity",1);
 
 	    					circles.transition()
 								.delay(function(d, i) {
@@ -349,7 +313,16 @@ console.log(d3.min(dataset, function(d) { return +d.rade; }));
 	    				}
 	    				else
 	    				{
-	    					column("legend", colorScale);
+	    					
+							svg.select(".legendQuantHab")
+							.transition()
+							.duration(500)
+				    		.attr("opacity",0);
+
+	    					svg.select(".legendQuant")
+	    					.transition()
+							.duration(500)
+				    		.attr("opacity",1);
 
 	    					circles.transition()
 								.delay(function(d, i) {

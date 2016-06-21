@@ -1,0 +1,41 @@
+
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+<script type="text/javascript" src="js/AudioFade.js"></script>
+</head>
+
+<body>
+
+</div>
+    <audio loop id="beatles" src="11-the_beatles-in_my_life.mp3"></audio>
+    <audio loop id="benfolds" src="00 - Ben Folds Five - One Angry Dwarf and 200 Solemn Faces.mp3"></audio>
+    <audio loop id="radiohead" src="Let Down.mp3"></audio>
+    <audio loop id="phish" src="00 - Phish - Billy Breathes - 02 - Character Zero.mp3"></audio>
+    <audio loop id="elliottsmith" src="09 Angeles.mp3"></audio>
+    <audio loop id="wilco" src="07 Heavy Metal Drummer.mp3"></audio>
+    <audio loop id="theknife" src="01 Heartbeats.mp3"></audio>
+    <audio loop id="passionpit" src="03 Moth's Wings.mp3"></audio>
+    <audio loop id="phantogram" src="02 Don't Move.mp3"></audio>
+</div>
+<img src="mjb.png" style="margin:auto; display:block"/>
+<script>
+$(function() {
+var first = new AudioFade('#beatles', 1, 70,50).init();
+var second = new AudioFade('#benfolds', 550,610,50).init();
+var third = new AudioFade('#radiohead', 1250,1310,50).init();
+var fourth = new AudioFade('#phish', 1950,2010,50).init();
+var fifth = new AudioFade('#elliottsmith', 2650,2710,50).init();
+var sixth = new AudioFade('#wilco', 3350,3410,50).init();
+var seventh = new AudioFade('#theknife', 4050,4110,50).init();
+var eighth = new AudioFade('#passionpit', 4750,4810,50).init();
+var nineth = new AudioFade('#phantogram', 5350,5410,50).init();
+});
+</script>
+</body>
+</html>

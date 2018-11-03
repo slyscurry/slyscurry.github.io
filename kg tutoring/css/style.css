@@ -512,6 +512,7 @@ h1, h2, h3, h4, h5, h6, figure {
   display: table;
   opacity: 0;
   min-height: 700px;
+  margin-right: 70px;
 }
 #fh5co-hero .flexslider .slider-text > .slider-text-inner {
   display: table-cell;
@@ -983,6 +984,10 @@ h1, h2, h3, h4, h5, h6, figure {
 @media screen and (max-width: 768px) {
   #fh5co-offcanvas {
     display: block;
+  }
+
+  .offcanvas-visible .fh5co-nav-toggle {
+    z-index: 999999 !important;
   }
 }
 #fh5co-offcanvas ul {

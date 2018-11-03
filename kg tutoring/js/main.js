@@ -111,17 +111,7 @@
 		$('#fh5co-offcanvas').append($('#fh5co-header nav').clone());
 	};
 
-	// var offcanvasMenu = function() {
 
-	// 	$('body').prepend('<div id="fh5co-offcanvas" />');
-	// 	$('#fh5co-offcanvas').append($('#fh5co-main-nav').clone());
-
-	// 	setTimeout(function(){
-	// 		$('#fh5co-offcanvas').prepend('<a href="#" class="js-fh5co-offcanvas-close fh5co-offcanvas-close" />');
-	// 		$('#fh5co-offcanvas #fh5co-main-nav').attr('id', '');
-	// 	}, 200);
-		
-	// };
 	var burgerMenu = function() {
 
 		$('body').on('click', '.js-fh5co-nav-toggle', function(event){

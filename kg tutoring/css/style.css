@@ -985,10 +985,6 @@ h1, h2, h3, h4, h5, h6, figure {
   #fh5co-offcanvas {
     display: block;
   }
-
-  .offcanvas-visible .fh5co-nav-toggle {
-    z-index: 999999 !important;
-  }
 }
 #fh5co-offcanvas ul {
   padding: 0;

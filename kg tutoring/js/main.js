@@ -116,11 +116,18 @@
 
 		$('body').on('click', '.js-fh5co-nav-toggle', function(event){
 			var $this = $(this);
-
+			if ( $('body').hasClass('offcanvas-visible') ) {
+			$('body').toggleClass('fh5co-overflow offcanvas-visible');
+			$this.toggleClass('active');
+			event.preventDefault();
+			document.getElementById('fh5co-offcanvas').style.visibility = 'hidden';
+			}
+			else {
 			$('body').toggleClass('fh5co-overflow offcanvas-visible');
 			$this.toggleClass('active');
 			event.preventDefault();
 			document.getElementById('fh5co-offcanvas').style.visibility = 'visible';
+			}
 
 		});
 

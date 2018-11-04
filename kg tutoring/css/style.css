@@ -971,11 +971,11 @@ h1, h2, h3, h4, h5, h6, figure {
 
 #fh5co-offcanvas {
   display: none;
-  height: 100%;
+  height: auto;
   right: 0;
   overflow-y: auto;
   position: fixed;
-  /*z-index: 1;*/
+  z-index: 1;
   top: 0;
   width: 275px;
   background: black;

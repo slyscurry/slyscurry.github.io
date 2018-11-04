@@ -128,6 +128,7 @@
 			if ( $('body').hasClass('offcanvas-visible') ) {
 		   	$('body').removeClass('offcanvas-visible');
 		   	$('.js-fh5co-nav-toggle').removeClass('active');
+		   	document.getElementById('fh5co-offcanvas').style.visibility = 'hidden';
 		   }
 		});
 
@@ -135,6 +136,7 @@
 			if ( $('body').hasClass('offcanvas-visible') ) {
 		   	$('body').removeClass('offcanvas-visible');
 		   	$('.js-fh5co-nav-toggle').removeClass('active');
+		   	document.getElementById('fh5co-offcanvas').style.visibility = 'hidden';
 		   }
 		});
 

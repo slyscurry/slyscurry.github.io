@@ -120,6 +120,7 @@
 			$('body').toggleClass('fh5co-overflow offcanvas-visible');
 			$this.toggleClass('active');
 			event.preventDefault();
+			document.getElementById('fh5co-offcanvas').style.visibility = 'visible';
 
 		});
 
